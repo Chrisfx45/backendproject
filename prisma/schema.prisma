@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["mongodb"]
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = "mongodb+srv://christopherfx45:Nurhana65.@testapp.id0aq7a.mongodb.net/testapp?retryWrites=true&w=majority?authSource=admin"
+}
+model Restaurants{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  lat String
+  long String
+  desc String
+  link String @default("")
+  name String
+  categoty String
+  price String
+  featured Boolean @default(false)
+  rev Review[]
+  wished Wishlist[]
+  saved Saved[]
+}
+model User {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  name String
+  email String
+  password String
+  membership String @default("Bronze")
+  rev Review[]
+  wish Wishlist[]
+  saved Saved[]
+}
+model Wishlist{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  rest Restaurants @relation(fields : [restid], references:[id])
+  restid String @db.ObjectId
+  user User @relation(fields: [userid], references: [id])
+  userid String @db.ObjectId
+  username String
+  restname String
+  thumbnail String
+  
+  }
+model Saved{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  rest Restaurants @relation(fields : [restid], references:[id])
+  restid String @db.ObjectId
+  user User @relation(fields: [userid], references: [id])
+  userid String @db.ObjectId
+  username String
+  restname String
+  thumbnail String
+
+}
+model Review{
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  user User @relation(fields: [userid], references: [id])
+  userid String @db.ObjectId
+  rest Restaurants @relation(fields: [restid], references: [id])
+  restid String @db.ObjectId
+  desc String
+  rating String
+}
