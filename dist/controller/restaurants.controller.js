@@ -15,7 +15,7 @@ const prisma = new client_1.PrismaClient();
 function addRest(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            const { name, lat, long, desc, categ, price } = req.body;
+            const { name, lat, long, desc, categ, price, link, featured } = req.body;
             const findRest = yield prisma.restaurants.findFirst({
                 where: { name: name }
             });
@@ -26,6 +26,8 @@ function addRest(req, res) {
             }
             const createRest = yield prisma.restaurants.create({
                 data: {
+                    link: link,
+                    featured: featured,
                     name: name,
                     lat: lat,
                     long: long,

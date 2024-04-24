@@ -4,7 +4,7 @@ import { PrismaClient } from "@prisma/client"
 const prisma = new PrismaClient()
 export async function addRest(req : Request, res : Response){
     try {
-        const {name, lat, long, desc, categ, price} = req.body
+        const {name, lat, long, desc, categ, price, link, featured} = req.body
         const findRest = await prisma.restaurants.findFirst({
             where :{ name : name}
         })
@@ -15,6 +15,8 @@ export async function addRest(req : Request, res : Response){
         }
         const createRest = await prisma.restaurants.create({
             data :{
+                link : link,
+                featured : featured,
                 name : name,
                 lat : lat,
                 long : long,
